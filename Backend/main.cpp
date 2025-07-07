@@ -26,18 +26,11 @@ void limpiarBuffer() {
 int main() {
     Inventario inventario;
     int opcion;
-    static int id_producto = 1;
 
     do {
         mostrarMenu();
         std::cin >> opcion;
-
-        //permite solo entradas numericas
-        if (std::cin.fail()) {
-            std::cout << "Entrada inválida.\n";
-            limpiarBuffer();
-            break;
-        }
+        limpiarBuffer();
 
         switch (opcion) {
             case 1: {
@@ -60,30 +53,26 @@ int main() {
                     std::cout << "Error al guardar archivo.\n";
                 break;
             }
-                case 3: {
-                    std::string nombre;
-                    double precio;
-                    int cantidad;
+            case 3: {
+                std::string id, nombre;
+                double precio;
+                int cantidad;
 
-                    std::cout << "Nombre: ";
-                    std::getline(std::cin, nombre);
-                    std::cout << "Precio: ";
-                    std::cin >> precio;
-                    std::cout << "Cantidad: ";
-                    std::cin >> cantidad;
-                    limpiarBuffer();
+                std::cout << "ID: ";
+                std::getline(std::cin, id);
+                std::cout << "Nombre: ";
+                std::getline(std::cin, nombre);
+                std::cout << "Precio: ";
+                std::cin >> precio;
+                std::cout << "Cantidad: ";
+                std::cin >> cantidad;
+                limpiarBuffer();
 
-
-
-                    // ID autogenerado
-                    //Garantizamos: unicidad y fiabilidad con respecto a implementacion de Bases de datos reales 
-                    std::string id = "P" + std::to_string(id_producto++);
-                    Producto p(id, nombre, precio, cantidad);
-                    inventario.agregarProducto(p);
-                    std::cout << "Producto agregado con ID: " << id << "\n";
-                    break;
-                }
-
+                Producto p(id, nombre, precio, cantidad);
+                inventario.agregarProducto(p);
+                std::cout << "Producto agregado con éxito.\n";
+                break;
+            }
             case 4: {
                 std::string id;
                 std::cout << "ID del producto a eliminar: ";
